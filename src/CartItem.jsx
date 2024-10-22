@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { removeItem, updateQuantity } from './CartSlice';
+import { addItem, removeItem, updateQuantity, incrementQuantity, decrementQuantity } from './CartSlice';
 import './CartItem.css';
 
 const CartItem = ({ onContinueShopping }) => {
@@ -9,27 +9,39 @@ const CartItem = ({ onContinueShopping }) => {
 
   // Calculate total amount for all products in the cart
   const calculateTotalAmount = () => {
- 
+    let totalCost = 0;
+    item.forEach((item) =>{
+        totalCost +=  item.cost * item.quantity;
+    })
   };
 
   const handleContinueShopping = (e) => {
-   
+    e.preventDefault();
+    setShowCart(false);
   };
 
 
 
   const handleIncrement = (item) => {
+    dispatch(incrementQuantity(item));
   };
 
   const handleDecrement = (item) => {
-   
+    dispatch(decrementQuantity(item));
+    
   };
 
   const handleRemove = (item) => {
+    dispatch(removeItem(item));
+  };
+
+  const handleCheckoutShopping = (e) => {
+    alert('Functionality to be added for future reference');
   };
 
   // Calculate total cost based on quantity for an item
   const calculateTotalCost = (item) => {
+    
   };
 
   return (
@@ -54,7 +66,7 @@ const CartItem = ({ onContinueShopping }) => {
         ))}
       </div>
       <div style={{ marginTop: '20px', color: 'black' }} className='total_cart_amount'></div>
-      <div className="continue_shopping_btn">
+      <div className="continue_shopping_btn" onClick={handleCheckoutShopping}>
         <button className="get-started-button" onClick={(e) => handleContinueShopping(e)}>Continue Shopping</button>
         <br />
         <button className="get-started-button1">Checkout</button>
