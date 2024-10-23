@@ -6,6 +6,21 @@ function ProductList() {
     const [showCart, setShowCart] = useState(false); 
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
     const [addedToCart, setAddedToCart] = useState({}); // state to track what was added to cart
+    
+    useEffect(() => {}, []);
+
+    const alreadyInCart = (itemName) => {
+        return cartItems.some((item) => item.name === itemName);
+    }
+
+    const handleAddToCart = (item) => {
+        console.log("clicked");
+        dispatch(addItem(item));
+    }
+
+    const totalItems = () => {
+        return cartItems.reduce((total, item) => total + item.quantity, 0);
+    }
 
     const plantsArray = [
         {
@@ -239,19 +254,11 @@ function ProductList() {
     setShowCart(true); // Set showCart to true when cart icon is clicked
    };
 
-   const handleAddToCart = (product) => {
-    dispatch(addItem(product));
-    setAddedToCart((prevState) => ({
-        ...prevState,
-        [product.name]: true, 
-    }));
-   };
-
-const handlePlantsClick = (e) => {
-    e.preventDefault();
-    setShowPlants(true); // Set showAboutUs to true when "About Us" link is clicked
-    setShowCart(false); // Hide the cart when navigating to About Us
-};
+    const handlePlantsClick = (e) => {
+        e.preventDefault();
+        setShowPlants(true); // Set showAboutUs to true when "About Us" link is clicked
+        setShowCart(false); // Hide the cart when navigating to About Us
+    };
 
    const handleContinueShopping = (e) => {
     e.preventDefault();
